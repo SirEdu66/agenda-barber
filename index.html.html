@@ -4,58 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda Barber</title>
+    <style>
+        /* Reset e Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Container Simulando Tela de Smartphone */
+        #app {
+            width: 100%;
+            max-width: 414px;
+            background-color: #ffffff;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 70px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Agenda Barber</h1>
-    </header>
-    <main id="conteudo-principal">
-        <section id="inicio" class="tela">
-            <h2>Painel do dia</h2>
-            <p>Uma agenda cheia. Um bom dia de trabalho.</p>
-            <h3>Os números do dia</h3>
+    <div id="app">
+        <header>
+            <h1>Agenda Barber</h1>
+        </header>
+        <main id="conteudo-principal">
+            <section id="inicio" class="tela">
+                <h2>Painel do dia</h2>
+                <p>Uma agenda cheia. Um bom dia de trabalho.</p>
+                
+                <h3>Os números do dia</h3>
+                <ul>
+                    <li>Agendamentos: 08</li>
+                    <li>Concluídos: 02</li>
+                    <li>Faltas / cancelados: 01</li>
+                    <li>Faturamento previsto: R$ 460,00</li>
+                </ul>
+            </section>
+            <section id="agenda" class="tela" style="display: none;">
+                <h2>Agenda</h2>
+                <p>Quarta-Feira, 30 de Setembro</p>
+                
+                <ul>
+                    <li>08:00 - 08:45 | Gabriel Costa (Corte) | Concluído</li>
+                    <li>11:00 - 12:15 | Bruno Ferreira (Combo) | Em atendimento</li>
+                </ul>
+            </section>
+            <section id="agendar" class="tela" style="display: none;">
+                <h2>Novo agendamento</h2>
+                <form>
+                    <label>Cliente:</label>
+                    <input type="text" placeholder="Buscar por nome ou telefone">
+                    
+                    <label>Barbeiro:</label>
+                    <select>
+                        <option>Rafael Mendes</option>
+                        <option>Lucas Oliveira</option>
+                    </select>
+                    
+                    <label>Serviço:</label>
+                    <select>
+                        <option>Corte (45 min - R$ 55,00)</option>
+                        <option>Barba (30 min - R$ 40,00)</option>
+                        <option>Combo (75 min - R$ 85,00)</option>
+                    </select>
+                    
+                    <button type="button">Agendar</button>
+                </form>
+            </section>
+        </main>
+        <nav>
             <ul>
-                <li>Agendamentos: 08</li>
-                <li>Concluídos: 02</li>
-                <li>Faltas / cancelados: 01</li>
-                <li>Faturamento previsto: R$ 460,00</li>
+                <li onclick="mudarTela('inicio')">Início</li>
+                <li onclick="mudarTela('agenda')">Agenda</li>
+                <li onclick="mudarTela('agendar')">Agendar</li>
             </ul>
-        </section>
-        <section id="agenda" class="tela" style="display: none;">
-            <h2>Agenda</h2>
-            <p>Quarta-Feira, 30 de Setembro</p>
-            <ul>
-                <li>08:00 - 08:45 | Gabriel Costa (Corte) | Concluído</li>
-                <li>11:00 - 12:15 | Bruno Ferreira (Combo) | Em atendimento</li>
-            </ul>
-        </section>
-        <section id="agendar" class="tela" style="display: none;">
-            <h2>Novo agendamento</h2>
-            <form>
-                <label>Cliente:</label>
-                <input type="text" placeholder="Buscar por nome ou telefone">
-                <label>Barbeiro:</label>
-                <select>
-                    <option>Rafael Mendes</option>
-                    <option>Lucas Oliveira</option>
-                </select>
-                <label>Serviço:</label>
-                <select>
-                    <option>Corte (45 min - R$ 55,00)</option>
-                    <option>Barba (30 min - R$ 40,00)</option>
-                    <option>Combo (75 min - R$ 85,00)</option>
-                </select>
-                <button type="button">Agendar</button>
-            </form>
-        </section>
-    </main>
-    <nav>
-        <ul>
-            <li onclick="mudarTela('inicio')">Início</li>
-            <li onclick="mudarTela('agenda')">Agenda</li>
-            <li onclick="mudarTela('agendar')">Agendar</li>
-        </ul>
-    </nav>
+        </nav>
+    </div>
     <script>
         function mudarTela(idTela) {
             let telas = document.querySelectorAll('.tela');
