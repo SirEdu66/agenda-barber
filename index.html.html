@@ -5,25 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda Barber</title>
     <style>
-        /* Reset e Base */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background-color: #e0e0e0;
-            display: flex;
+            background-color: #e0e0e0; 
+            display: flex; 
             justify-content: center;
         }
-        
-        /* Container Simulando Tela de Smartphone */
         #app {
-            width: 100%;
-            max-width: 414px;
+            width: 100%; 
+            max-width: 414px; 
             background-color: #ffffff;
-            min-height: 100vh;
-            position: relative;
+            min-height: 100vh; 
+            position: relative; 
             padding-bottom: 70px;
             box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
+        
+        /* Cabeçalho */
+        header {
+            background-color: #1a1a1a;
+            color: #d4af37;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Menu Inferior (Bottom Navigation) */
+        nav {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #ffffff;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+        .nav-item {
+            text-align: center;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.9rem;
+            flex: 1;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-item.ativo { color: #d4af37; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -31,7 +59,8 @@
         <header>
             <h1>Agenda Barber</h1>
         </header>
-        <main id="conteudo-principal">
+
+        <main id="conteudo-principal" style="padding: 20px;">
             <section id="inicio" class="tela">
                 <h2>Painel do dia</h2>
                 <p>Uma agenda cheia. Um bom dia de trabalho.</p>
@@ -44,6 +73,7 @@
                     <li>Faturamento previsto: R$ 460,00</li>
                 </ul>
             </section>
+
             <section id="agenda" class="tela" style="display: none;">
                 <h2>Agenda</h2>
                 <p>Quarta-Feira, 30 de Setembro</p>
@@ -53,6 +83,7 @@
                     <li>11:00 - 12:15 | Bruno Ferreira (Combo) | Em atendimento</li>
                 </ul>
             </section>
+
             <section id="agendar" class="tela" style="display: none;">
                 <h2>Novo agendamento</h2>
                 <form>
@@ -76,21 +107,28 @@
                 </form>
             </section>
         </main>
+
         <nav>
-            <ul>
-                <li onclick="mudarTela('inicio')">Início</li>
-                <li onclick="mudarTela('agenda')">Agenda</li>
-                <li onclick="mudarTela('agendar')">Agendar</li>
-            </ul>
+            <div id="nav-inicio" class="nav-item ativo" onclick="mudarTela('inicio', this)">Início</div>
+            <div id="nav-agenda" class="nav-item" onclick="mudarTela('agenda', this)">Agenda</div>
+            <div id="nav-agendar" class="nav-item" onclick="mudarTela('agendar', this)">Agendar</div>
         </nav>
     </div>
+
     <script>
-        function mudarTela(idTela) {
+        function mudarTela(idTela, elementoClicado) {
             let telas = document.querySelectorAll('.tela');
             for (let i = 0; i < telas.length; i++) {
                 telas[i].style.display = 'none';
             }
+            
+            let navItems = document.querySelectorAll('.nav-item');
+            for (let i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('ativo');
+            }
+
             document.getElementById(idTela).style.display = 'block';
+            elementoClicado.classList.add('ativo');
         }
     </script>
 </body>
