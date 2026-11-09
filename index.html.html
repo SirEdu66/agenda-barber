@@ -4,65 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda Barber</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #e0e0e0; 
+            display: flex; 
+            justify-content: center;
+        }
+        #app {
+            width: 100%; 
+            max-width: 414px; 
+            background-color: #ffffff;
+            min-height: 100vh; 
+            position: relative; 
+            padding-bottom: 70px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        
+        header { background-color: #1a1a1a; color: #d4af37; padding: 20px; text-align: center; }
+        header h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
+        
+        main { padding: 20px; }
+        h2 { font-size: 1.4rem; color: #1a1a1a; margin-bottom: 5px; }
+        p.subtitulo { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .card-destaque { background-color: #1a3636; color: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .card-destaque p { color: #a9b5b5; font-size: 0.9rem; margin-top: 10px; }
+        
+        .grid-numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card-numero { background-color: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #eee; }
+        .card-numero label { color: #666; font-size: 0.8rem; font-weight: normal; }
+        .card-numero span { display: block; font-size: 1.6rem; font-weight: bold; color: #1a1a1a; margin-top: 5px; }
+        
+        form { display: flex; flex-direction: column; gap: 15px; }
+        label { font-size: 0.9rem; font-weight: bold; color: #333; }
+        input, select { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background-color: #fafafa; }
+        button { background-color: #d4af37; color: #1a1a1a; border: none; padding: 16px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        
+        /* Lista de Agenda e Cores de Serviço baseadas na validação */
+        .lista-agenda { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .item-agenda {
+            padding: 15px; border-radius: 8px; border-left: 6px solid #ccc;
+            background-color: #f8f9fa; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .item-agenda strong { display: block; font-size: 1.1rem; color: #1a1a1a; margin-bottom: 4px; }
+        .item-agenda span { font-size: 0.85rem; color: #666; }
+        
+        /* Cores aplicadas (Corte = Azul, Barba = Vermelho, Combo = Roxo) */
+        .servico-corte { border-left-color: #0d6efd; background-color: #f0f7ff; }
+        .servico-barba { border-left-color: #dc3545; background-color: #fff0f1; }
+        .servico-combo { border-left-color: #6f42c1; background-color: #f5f0fa; }
+        
+        nav { position: absolute; bottom: 0; width: 100%; background-color: #ffffff; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 15px 0; }
+        .nav-item { text-align: center; color: #999; cursor: pointer; font-size: 0.9rem; flex: 1; font-weight: 500; transition: color 0.3s; }
+        .nav-item.ativo { color: #d4af37; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Agenda Barber</h1>
-    </header>
-    <main id="conteudo-principal">
-        <section id="inicio" class="tela">
-            <h2>Painel do dia</h2>
-            <p>Uma agenda cheia. Um bom dia de trabalho.</p>
-            <h3>Os números do dia</h3>
-            <ul>
-                <li>Agendamentos: 08</li>
-                <li>Concluídos: 02</li>
-                <li>Faltas / cancelados: 01</li>
-                <li>Faturamento previsto: R$ 460,00</li>
-            </ul>
-        </section>
-        <section id="agenda" class="tela" style="display: none;">
-            <h2>Agenda</h2>
-            <p>Quarta-Feira, 30 de Setembro</p>
-            <ul>
-                <li>08:00 - 08:45 | Gabriel Costa (Corte) | Concluído</li>
-                <li>11:00 - 12:15 | Bruno Ferreira (Combo) | Em atendimento</li>
-            </ul>
-        </section>
-        <section id="agendar" class="tela" style="display: none;">
-            <h2>Novo agendamento</h2>
-            <form>
-                <label>Cliente:</label>
-                <input type="text" placeholder="Buscar por nome ou telefone">
-                <label>Barbeiro:</label>
-                <select>
-                    <option>Rafael Mendes</option>
-                    <option>Lucas Oliveira</option>
-                </select>
-                <label>Serviço:</label>
-                <select>
-                    <option>Corte (45 min - R$ 55,00)</option>
-                    <option>Barba (30 min - R$ 40,00)</option>
-                    <option>Combo (75 min - R$ 85,00)</option>
-                </select>
-                <button type="button">Agendar</button>
-            </form>
-        </section>
-    </main>
-    <nav>
-        <ul>
-            <li onclick="mudarTela('inicio')">Início</li>
-            <li onclick="mudarTela('agenda')">Agenda</li>
-            <li onclick="mudarTela('agendar')">Agendar</li>
-        </ul>
-    </nav>
+    <div id="app">
+        <header>
+            <h1>Agenda Barber</h1>
+        </header>
+
+        <main id="conteudo-principal">
+            <section id="inicio" class="tela">
+                <h2>Painel do dia</h2>
+                <p class="subtitulo">Acompanhe o ritmo da barbearia hoje.</p>
+                
+                <div class="card-destaque">
+                    <h3>Uma agenda cheia. Um bom dia de trabalho.</h3>
+                    <p>Seu espaço, sua equipe e seus clientes em perfeita sintonia.</p>
+                </div>
+                
+                <div class="grid-numeros">
+                    <div class="card-numero">
+                        <label>Agendamentos</label>
+                        <span>08</span>
+                    </div>
+                    <div class="card-numero">
+                        <label>Concluídos</label>
+                        <span>02</span>
+                    </div>
+                    <div class="card-numero">
+                        <label>Faltas / Cancelados</label>
+                        <span>01</span>
+                    </div>
+                    <div class="card-numero">
+                        <label>Faturamento previsto</label>
+                        <span>R$ 460,00</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="agenda" class="tela" style="display: none;">
+                <h2>Agenda</h2>
+                <p class="subtitulo">Quarta-Feira, 30 de Setembro</p>
+                
+                <ul class="lista-agenda">
+                    <li class="item-agenda servico-corte">
+                        <strong>08:00 - 08:45 | Gabriel Costa</strong>
+                        <span>Serviço: Corte | Status: Concluído</span>
+                    </li>
+                    <li class="item-agenda servico-barba">
+                        <strong>09:00 - 09:30 | Tiago Silva</strong>
+                        <span>Serviço: Barba | Status: Agendado</span>
+                    </li>
+                    <li class="item-agenda servico-combo">
+                        <strong>11:00 - 12:15 | Bruno Ferreira</strong>
+                        <span>Serviço: Combo | Status: Em atendimento</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="agendar" class="tela" style="display: none;">
+                <h2>Novo agendamento</h2>
+                <p class="subtitulo">Um novo horário para o seu cliente.</p>
+                
+                <form>
+                    <label>Cliente:</label>
+                    <input type="text" placeholder="Buscar por nome ou telefone">
+                    
+                    <label>Barbeiro:</label>
+                    <select>
+                        <option>Rafael Mendes</option>
+                        <option>Lucas Oliveira</option>
+                    </select>
+                    
+                    <label>Serviço:</label>
+                    <select>
+                        <option>Corte (45 min - R$ 55,00)</option>
+                        <option>Barba (30 min - R$ 40,00)</option>
+                        <option>Combo (75 min - R$ 85,00)</option>
+                    </select>
+                    
+                    <button type="button" onclick="alert('Agendamento salvo com sucesso!')">Agendar Horário</button>
+                </form>
+            </section>
+        </main>
+
+        <nav>
+            <div id="nav-inicio" class="nav-item ativo" onclick="mudarTela('inicio', this)">Início</div>
+            <div id="nav-agenda" class="nav-item" onclick="mudarTela('agenda', this)">Agenda</div>
+            <div id="nav-agendar" class="nav-item" onclick="mudarTela('agendar', this)">Agendar</div>
+        </nav>
+    </div>
+
     <script>
-        function mudarTela(idTela) {
+        function mudarTela(idTela, elementoClicado) {
             let telas = document.querySelectorAll('.tela');
             for (let i = 0; i < telas.length; i++) {
                 telas[i].style.display = 'none';
             }
+            
+            let navItems = document.querySelectorAll('.nav-item');
+            for (let i = 0; i < navItems.length; i++) {
+                navItems[i].classList.remove('ativo');
+            }
+            
             document.getElementById(idTela).style.display = 'block';
+            elementoClicado.classList.add('ativo');
         }
     </script>
 </body>
