@@ -9,20 +9,10 @@
     <header>
         <h1>Agenda Barber</h1>
     </header>
-
-    <nav>
-        <ul>
-            <li>Início</li>
-            <li>Agenda</li>
-            <li>Agendar</li>
-        </ul>
-    </nav>
-
     <main id="conteudo-principal">
-        <section id="inicio">
+        <section id="inicio" class="tela">
             <h2>Painel do dia</h2>
             <p>Uma agenda cheia. Um bom dia de trabalho.</p>
-            
             <h3>Os números do dia</h3>
             <ul>
                 <li>Agendamentos: 08</li>
@@ -31,29 +21,49 @@
                 <li>Faturamento previsto: R$ 460,00</li>
             </ul>
         </section>
-
-        <section id="agendar" style="display: none;">
+        <section id="agenda" class="tela" style="display: none;">
+            <h2>Agenda</h2>
+            <p>Quarta-Feira, 30 de Setembro</p>
+            <ul>
+                <li>08:00 - 08:45 | Gabriel Costa (Corte) | Concluído</li>
+                <li>11:00 - 12:15 | Bruno Ferreira (Combo) | Em atendimento</li>
+            </ul>
+        </section>
+        <section id="agendar" class="tela" style="display: none;">
             <h2>Novo agendamento</h2>
             <form>
                 <label>Cliente:</label>
                 <input type="text" placeholder="Buscar por nome ou telefone">
-                
                 <label>Barbeiro:</label>
                 <select>
                     <option>Rafael Mendes</option>
                     <option>Lucas Oliveira</option>
                 </select>
-                
                 <label>Serviço:</label>
                 <select>
                     <option>Corte (45 min - R$ 55,00)</option>
                     <option>Barba (30 min - R$ 40,00)</option>
                     <option>Combo (75 min - R$ 85,00)</option>
                 </select>
-                
                 <button type="button">Agendar</button>
             </form>
         </section>
     </main>
+    <nav>
+        <ul>
+            <li onclick="mudarTela('inicio')">Início</li>
+            <li onclick="mudarTela('agenda')">Agenda</li>
+            <li onclick="mudarTela('agendar')">Agendar</li>
+        </ul>
+    </nav>
+    <script>
+        function mudarTela(idTela) {
+            let telas = document.querySelectorAll('.tela');
+            for (let i = 0; i < telas.length; i++) {
+                telas[i].style.display = 'none';
+            }
+            document.getElementById(idTela).style.display = 'block';
+        }
+    </script>
 </body>
 </html>
