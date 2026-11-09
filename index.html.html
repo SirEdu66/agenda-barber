@@ -22,27 +22,14 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
         
-        header { 
-            background-color: #1a1a1a; 
-            color: #d4af37; 
-            padding: 20px; 
-            text-align: center; 
-        }
+        header { background-color: #1a1a1a; color: #d4af37; padding: 20px; text-align: center; }
         header h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; }
         
-        /* Área de Conteúdo Geral */
         main { padding: 20px; }
         h2 { font-size: 1.4rem; color: #1a1a1a; margin-bottom: 5px; }
         p.subtitulo { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
         
-        /* Cards - Painel do Dia */
-        .card-destaque {
-            background-color: #1a3636; 
-            color: #fff; 
-            padding: 20px;
-            border-radius: 12px; 
-            margin-bottom: 20px;
-        }
+        .card-destaque { background-color: #1a3636; color: #fff; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
         .card-destaque p { color: #a9b5b5; font-size: 0.9rem; margin-top: 10px; }
         
         .grid-numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
@@ -50,29 +37,26 @@
         .card-numero label { color: #666; font-size: 0.8rem; font-weight: normal; }
         .card-numero span { display: block; font-size: 1.6rem; font-weight: bold; color: #1a1a1a; margin-top: 5px; }
         
-        /* Formulários */
         form { display: flex; flex-direction: column; gap: 15px; }
         label { font-size: 0.9rem; font-weight: bold; color: #333; }
-        input, select {
-            width: 100%; padding: 14px; border: 1px solid #ddd;
-            border-radius: 8px; font-size: 1rem; background-color: #fafafa;
-        }
-        button {
-            background-color: #d4af37; color: #1a1a1a; border: none;
-            padding: 16px; border-radius: 8px; font-size: 1rem;
-            font-weight: bold; cursor: pointer; margin-top: 10px;
-        }
+        input, select { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; background-color: #fafafa; }
+        button { background-color: #d4af37; color: #1a1a1a; border: none; padding: 16px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
         
-        nav { 
-            position: absolute; 
-            bottom: 0; 
-            width: 100%; 
-            background-color: #ffffff; 
-            border-top: 1px solid #eee; 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 15px 0; 
+        /* Lista de Agenda e Cores de Serviço baseadas na validação */
+        .lista-agenda { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .item-agenda {
+            padding: 15px; border-radius: 8px; border-left: 6px solid #ccc;
+            background-color: #f8f9fa; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
+        .item-agenda strong { display: block; font-size: 1.1rem; color: #1a1a1a; margin-bottom: 4px; }
+        .item-agenda span { font-size: 0.85rem; color: #666; }
+        
+        /* Cores aplicadas (Corte = Azul, Barba = Vermelho, Combo = Roxo) */
+        .servico-corte { border-left-color: #0d6efd; background-color: #f0f7ff; }
+        .servico-barba { border-left-color: #dc3545; background-color: #fff0f1; }
+        .servico-combo { border-left-color: #6f42c1; background-color: #f5f0fa; }
+        
+        nav { position: absolute; bottom: 0; width: 100%; background-color: #ffffff; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 15px 0; }
         .nav-item { text-align: center; color: #999; cursor: pointer; font-size: 0.9rem; flex: 1; font-weight: 500; transition: color 0.3s; }
         .nav-item.ativo { color: #d4af37; font-weight: bold; }
     </style>
@@ -82,6 +66,7 @@
         <header>
             <h1>Agenda Barber</h1>
         </header>
+
         <main id="conteudo-principal">
             <section id="inicio" class="tela">
                 <h2>Painel do dia</h2>
@@ -114,11 +99,21 @@
 
             <section id="agenda" class="tela" style="display: none;">
                 <h2>Agenda</h2>
-                <p>Quarta-Feira, 30 de Setembro</p>
+                <p class="subtitulo">Quarta-Feira, 30 de Setembro</p>
                 
-                <ul>
-                    <li>08:00 - 08:45 | Gabriel Costa (Corte) | Concluído</li>
-                    <li>11:00 - 12:15 | Bruno Ferreira (Combo) | Em atendimento</li>
+                <ul class="lista-agenda">
+                    <li class="item-agenda servico-corte">
+                        <strong>08:00 - 08:45 | Gabriel Costa</strong>
+                        <span>Serviço: Corte | Status: Concluído</span>
+                    </li>
+                    <li class="item-agenda servico-barba">
+                        <strong>09:00 - 09:30 | Tiago Silva</strong>
+                        <span>Serviço: Barba | Status: Agendado</span>
+                    </li>
+                    <li class="item-agenda servico-combo">
+                        <strong>11:00 - 12:15 | Bruno Ferreira</strong>
+                        <span>Serviço: Combo | Status: Em atendimento</span>
+                    </li>
                 </ul>
             </section>
 
@@ -143,7 +138,7 @@
                         <option>Combo (75 min - R$ 85,00)</option>
                     </select>
                     
-                    <button type="button" onclick="alert('Agendamento salvo!')">Agendar Horário</button>
+                    <button type="button" onclick="alert('Agendamento salvo com sucesso!')">Agendar Horário</button>
                 </form>
             </section>
         </main>
